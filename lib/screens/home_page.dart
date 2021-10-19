@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_giff/screens/gif_page.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -120,12 +121,22 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (context, index) {
           if (_search == null || index < snapshot.data["data"].length) {
             return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          GifPage(snapshot.data["data"][index]),
+                    ),
+                  );
+                },
                 child: Image.network(snapshot.data["data"][index]["images"]
                     ["fixed_height"]["url"]));
           } else {
             return Container(
                 child: GestureDetector(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.add, color: Colors.white, size: 70.0),
                   Text(
